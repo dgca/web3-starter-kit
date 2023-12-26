@@ -8,9 +8,13 @@
     "@nomicfoundation/hardhat-toolbox-viem": "^2.0.0",
     "@nx/js": "17.2.7",
     "hardhat": "^2.19.3",
-    "nx": "17.2.7"
+    "nx": "17.2.7",
+    "type-fest": "^4.8.3"
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "ts-node": "^10.9.2"
+  }
 }
