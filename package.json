@@ -1,0 +1,16 @@
+{
+  "name": "@typeof/web3-starter-kit",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox-viem": "^2.0.0",
+    "@nx/js": "17.2.7",
+    "hardhat": "^2.19.3",
+    "nx": "17.2.7"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

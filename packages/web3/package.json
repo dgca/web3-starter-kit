@@ -1,0 +1,8 @@
+{
+  "name": "web3",
+  "scripts": {
+    "hardhat": "npx hardhat",
+    "test": "hardhat test",
+    "build": "hardhat compile"
+  }
+}
