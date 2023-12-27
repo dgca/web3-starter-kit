@@ -1,5 +1,5 @@
 {
-  "name": "web3",
+  "name": "solidity",
   "main": "dist/index.js",
   "scripts": {
     "hardhat": "npx hardhat",
