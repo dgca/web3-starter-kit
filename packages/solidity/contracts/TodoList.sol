@@ -15,12 +15,12 @@ contract TodoList is Ownable {
 
     constructor(address _initialOwner) Ownable(_initialOwner) {}
 
-    function add(string memory _todo) public {
+    function add(string memory _todo) public onlyOwner {
         todos.push(Todo({ text: _todo, completed: false }));
         emit TodoAdded(_todo, false);
     }
 
-    function toggleCompleted(uint _index) public {
+    function toggleCompleted(uint _index) public onlyOwner {
         todos[_index].completed = !todos[_index].completed;
     }
 
