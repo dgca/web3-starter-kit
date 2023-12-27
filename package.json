@@ -7,6 +7,7 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox-viem": "^2.0.0",
     "@nx/js": "17.2.7",
+    "@openzeppelin/contracts": "^5.0.1",
     "hardhat": "^2.19.3",
     "nx": "17.2.7",
     "type-fest": "^4.8.3"
