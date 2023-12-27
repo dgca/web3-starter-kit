@@ -1,4 +1,8 @@
-# web3 starter kit
+# WIP: web3 starter kit
+
+Current status: This is what I'm git cloning to start a new web3 project.
+
+Future status: This is an npx tool that bootstraps a web3 project with a React front-end, choice of CSS framework, choice of solidity framework, and includes a contract debugging tool.
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
