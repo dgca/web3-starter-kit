@@ -4,32 +4,27 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 struct Todo {
-  string text;
-  bool completed;
+    string text;
+    bool completed;
 }
 
 contract TodoList is Ownable {
-  Todo[] todos;
+    Todo[] todos;
 
-  event TodoAdded(string text, bool completed);
+    event TodoAdded(string text, bool completed);
 
-  constructor(address _initialOwner)
-        Ownable(_initialOwner)
-    {}
+    constructor(address _initialOwner) Ownable(_initialOwner) {}
 
-  function add(string memory _todo) public {
-    todos.push(Todo({
-      text: _todo,
-      completed: false
-    }));
-    emit TodoAdded(_todo, false);
-  }
+    function add(string memory _todo) public {
+        todos.push(Todo({ text: _todo, completed: false }));
+        emit TodoAdded(_todo, false);
+    }
 
-  function toggleCompleted(uint _index) public {
-    todos[_index].completed = !todos[_index].completed;
-  }
+    function toggleCompleted(uint _index) public {
+        todos[_index].completed = !todos[_index].completed;
+    }
 
-  function getAll() public view returns (Todo[] memory) {
-    return todos;
-  }
+    function getAll() public view returns (Todo[] memory) {
+        return todos;
+    }
 }
