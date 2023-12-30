@@ -1,0 +1,9 @@
+{
+  "name": "contracts",
+  "main": "./dist/artifacts/index",
+  "scripts": {
+    "hardhat": "npx hardhat",
+    "test": "hardhat test",
+    "build": "hardhat compile && ts-node ./lib/create-abi-exports.ts && tsc"
+  }
+}

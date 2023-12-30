@@ -1,9 +1,0 @@
-{
-  "name": "solidity",
-  "main": "dist/index.js",
-  "scripts": {
-    "hardhat": "npx hardhat",
-    "test": "hardhat test",
-    "build": "hardhat compile && ts-node ./lib/create-abi-exports.ts"
-  }
-}

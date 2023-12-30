@@ -9,6 +9,9 @@ const config: HardhatUserConfig = {
       evmVersion: "shanghai",
     },
   },
+  paths: {
+    sources: "./src",
+  },
 };
 
 export default config;

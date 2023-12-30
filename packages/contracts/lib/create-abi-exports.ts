@@ -1,11 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-const contractArtifactsDir = path.join(
-  path.resolve(),
-  "artifacts",
-  "contracts"
-);
+const contractArtifactsDir = path.join(path.resolve(), "artifacts", "src");
 
 const contractArtifacts = fs.readdirSync(contractArtifactsDir);
 
@@ -15,11 +11,16 @@ let exportsContent = `\n`;
 
 for (const contract of contractArtifacts) {
   const contractName = contract.replace(/\.sol$/, "");
-  importsContent += `import ${contractName}Json from "../artifacts/contracts/${contract}/${contractName}.json";\n`;
+  importsContent += `import ${contractName}Json from "../artifacts/src/${contract}/${contractName}.json";\n`;
   exportsContent += `export const ${contractName} = ${contractName}Json as ArtifactsMap["${contractName}"];\n`;
 }
 
-fs.writeFileSync(
-  path.join(path.resolve(), "dist", "index.ts"),
-  importsContent + exportsContent
-);
+const dirPath = path.join(path.resolve(), "artifacts");
+
+if (!fs.existsSync(dirPath)) {
+  fs.mkdirSync(dirPath);
+}
+
+const filePath = path.join(dirPath, "index.ts");
+
+fs.writeFileSync(path.join(filePath), importsContent + exportsContent);
