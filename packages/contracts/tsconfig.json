@@ -9,7 +9,5 @@
     "resolveJsonModule": true,
     "declaration": true,
     "outDir": "dist",
-  },
-  // "include": ["src", "artifacts", "lib", "dist", "test"],
-  // "files": ["./hardhat.config.ts"]
+  }
 }
