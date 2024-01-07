@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { Button, HelloWorld } from "ui-kit";
+import { Button } from "ui-kit";
 
 const Home: NextPage = () => {
   return (
@@ -23,8 +23,6 @@ const Home: NextPage = () => {
           Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{" "}
           <a href="https://nextjs.org">Next.js!</a>
         </h1>
-
-        <HelloWorld name="Testing" />
 
         <Button>Click me</Button>
 
