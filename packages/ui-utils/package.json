@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "main": "dist/index.js",
   "files": [
-    "./src/styles/global.css",
-    "./src/tailwind/tailwind.config.js"
+    "./styles/global.css",
+    "./tailwind/tailwind.config.js"
   ],
   "devDependencies": {},
   "scripts": {
-    "build": "tsc ./src/index.ts --outDir dist"
+    "build": "tsc index.ts --outDir dist"
   }
 }

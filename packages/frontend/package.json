@@ -19,7 +19,9 @@
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "viem": "~1.19.15",
-    "wagmi": "~1.4.12"
+    "wagmi": "~1.4.12",
+    "ui-kit": "*",
+    "ui-utils": "*"
   },
   "devDependencies": {
     "@types/node": "^18.18.10",
