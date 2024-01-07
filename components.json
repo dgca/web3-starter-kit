@@ -11,6 +11,6 @@
   "aliases": {
     "components": "ui-kit",
     "utils": "ui-utils",
-    "ui": "ui-kit/lib/shadcnui"
+    "ui": "packages/ui-kit/components/shadcnui"
   }
 }

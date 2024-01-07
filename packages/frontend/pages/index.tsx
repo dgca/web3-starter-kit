@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { HelloWorld } from "ui-kit";
+import { Button, HelloWorld } from "ui-kit";
 
 const Home: NextPage = () => {
   return (
@@ -25,6 +25,8 @@ const Home: NextPage = () => {
         </h1>
 
         <HelloWorld name="Testing" />
+
+        <Button>Click me</Button>
 
         <p className={styles.description}>
           Get started by editing{" "}

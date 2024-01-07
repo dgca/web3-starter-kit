@@ -1,14 +1,12 @@
-const sharedConfig = require("ui-utils/src/tailwind/tailwind.config")
+const sharedConfig = require("ui-utils/tailwind/tailwind.config");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   ...sharedConfig,
   content: [
-    join(
-      __dirname,
-      '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'
-    ),
-    ...sharedConfig.content,
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -16,5 +14,4 @@ module.exports = {
     },
   },
   plugins: [...sharedConfig.plugins],
-}
-
+};
