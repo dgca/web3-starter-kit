@@ -4,10 +4,10 @@
   "license": "MIT",
   "scripts": {},
   "private": true,
-  "dependencies": {},
   "devDependencies": {
     "@nx/js": "17.2.8",
-    "nx": "17.2.8"
+    "nx": "17.2.8",
+    "tailwind": "^4.0.0"
   },
   "workspaces": [
     "packages/*"

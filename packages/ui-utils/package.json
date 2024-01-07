@@ -1,0 +1,13 @@
+{
+  "name": "ui-utils",
+  "version": "0.0.0",
+  "dependencies": {
+    "@swc/helpers": "~0.5.2"
+  },
+  "scripts": {
+    "build": "tsc . --outDir dist"
+  },
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts"
+}
