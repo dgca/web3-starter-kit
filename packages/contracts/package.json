@@ -1,10 +1,10 @@
 {
   "name": "contracts",
-  "main": "./dist/artifacts/index",
+  "main": "./dist/index",
   "scripts": {
     "hardhat": "npx hardhat",
     "test": "hardhat test",
-    "build": "hardhat compile && ts-node ./lib/create-abi-exports.ts && tsc"
+    "build": "hardhat compile && ts-node ./lib/create-abi-exports.ts && tsup ./abis/index.ts --dts"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",

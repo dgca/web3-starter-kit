@@ -5,22 +5,31 @@ const contractArtifactsDir = path.join(path.resolve(), "artifacts", "src");
 
 const contractArtifacts = fs.readdirSync(contractArtifactsDir);
 
-let importsContent = `import { ArtifactsMap } from "hardhat/types/artifacts";\n`;
+let fileContent = "";
 
-let exportsContent = `\n`;
+for (const folderName of contractArtifacts) {
+  const contractName = folderName.replace(/\.sol$/, "");
+  const jsonPath = path.join(
+    contractArtifactsDir,
+    folderName,
+    `${contractName}.json`
+  );
 
-for (const contract of contractArtifacts) {
-  const contractName = contract.replace(/\.sol$/, "");
-  importsContent += `import ${contractName}Json from "../artifacts/src/${contract}/${contractName}.json";\n`;
-  exportsContent += `export const ${contractName} = ${contractName}Json as ArtifactsMap["${contractName}"];\n`;
+  const contractJson = require(jsonPath);
+
+  fileContent += `export const ${contractName} = ${JSON.stringify(
+    contractJson.abi,
+    null,
+    2
+  )} as const;\n\n`;
 }
 
-const dirPath = path.join(path.resolve(), "artifacts");
+const distPath = path.join(path.resolve(), "abis");
 
-if (!fs.existsSync(dirPath)) {
-  fs.mkdirSync(dirPath);
+if (!fs.existsSync(distPath)) {
+  fs.mkdirSync(distPath);
 }
 
-const filePath = path.join(dirPath, "index.ts");
+const filePath = path.join(distPath, "index.ts");
 
-fs.writeFileSync(path.join(filePath), importsContent + exportsContent);
+fs.writeFileSync(path.join(filePath), fileContent);
