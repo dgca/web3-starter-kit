@@ -1,13 +1,13 @@
 {
   "name": "ui-utils",
   "version": "0.0.0",
-  "dependencies": {
-    "@swc/helpers": "~0.5.2"
-  },
+  "main": "dist/index.js",
+  "files": [
+    "./src/styles/global.css",
+    "./src/tailwind/tailwind.config.js"
+  ],
+  "devDependencies": {},
   "scripts": {
-    "build": "tsc . --outDir dist"
-  },
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+    "build": "tsc ./src/index.ts --outDir dist"
+  }
 }

@@ -1,3 +1,5 @@
+@import 'ui-utils/src/styles/global.css';
+
 html,
 body {
   padding: 0;
