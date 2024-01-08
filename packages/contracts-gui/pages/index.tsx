@@ -1,7 +1,8 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
+
 import { TestToken } from "contracts";
+
 import { ContractGUI } from "../components/ContractGUI/ContractGUI";
 
 const Home: NextPage = () => {

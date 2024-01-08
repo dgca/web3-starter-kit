@@ -50,6 +50,7 @@ module.exports = {
         project: ["./tsconfig.json", "./renderer/tsconfig.json"],
       },
     },
+    "import/internal-regex": "ui-kit|ui-utils|contracts",
   },
   ignorePatterns: [
     "node_modules/*",
