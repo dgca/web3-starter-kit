@@ -1,9 +1,18 @@
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import { TestToken } from "contracts";
+import { TodoList } from "contracts";
+import { Text } from "ui-kit";
 
 import { ContractGUI } from "../components/ContractGUI/ContractGUI";
+
+const contracts = {
+  TodoList: {
+    abi: TodoList,
+    address: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+  },
+};
 
 const Home: NextPage = () => {
   return (
@@ -17,12 +26,13 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
 
-      <main>
-        <ContractGUI
-          contractAbis={{
-            TestToken,
-          }}
-        />
+      <nav className="flex justify-between items-center border-b py-2 px-4 mb-8">
+        <Text.H4 as="div">Contract GUI</Text.H4>
+        <ConnectButton />
+      </nav>
+
+      <main className="px-4">
+        <ContractGUI contracts={contracts} />
       </main>
     </div>
   );

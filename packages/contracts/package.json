@@ -4,7 +4,8 @@
   "scripts": {
     "hardhat": "npx hardhat",
     "test": "hardhat test",
-    "build": "hardhat compile && ts-node ./lib/create-abi-exports.ts && tsup ./abis/index.ts --dts"
+    "build": "hardhat compile && ts-node ./lib/create-abi-exports.ts && tsup ./abis/index.ts --dts",
+    "deploy-local": "hardhat run --network localhost scripts/deploy.ts"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",

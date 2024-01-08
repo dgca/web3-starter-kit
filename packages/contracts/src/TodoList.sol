@@ -9,7 +9,7 @@ struct Todo {
 }
 
 contract TodoList is Ownable {
-    Todo[] todos;
+    Todo[] public todos;
 
     event TodoAdded(string text, bool completed);
 

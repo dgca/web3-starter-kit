@@ -1,21 +1,16 @@
 import hre from "hardhat";
-import { formatEther, parseEther } from "viem";
+
+async function deployTodoList() {
+  const [deployerClient] = await hre.viem.getWalletClients();
+  const todoList = await hre.viem.deployContract("TodoList", [
+    deployerClient.account.address,
+  ]);
+
+  console.log(`TodoList deployed to ${todoList.address}`);
+}
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = BigInt(currentTimestampInSeconds + 60);
-
-  const lockedAmount = parseEther("0.001");
-
-  const lock = await hre.viem.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
-
-  console.log(
-    `Lock with ${formatEther(
-      lockedAmount,
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`,
-  );
+  await deployTodoList();
 }
 
 // We recommend this pattern to be able to use async/await everywhere
