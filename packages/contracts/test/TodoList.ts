@@ -29,7 +29,7 @@ describe("TodoList", function () {
 
   describe("Add Todo", function () {
     it("Owner can add todo", async function () {
-      const { todoList, owner, publicClient } = await loadFixture(
+      const { todoList, publicClient } = await loadFixture(
         deployTodoListFixture,
       );
       const todoText = "Test Todo";
@@ -44,7 +44,7 @@ describe("TodoList", function () {
     });
 
     it("Non-owner can not add todo", async function () {
-      const { todoListAsOtherAccount, otherAccount } = await loadFixture(
+      const { todoListAsOtherAccount } = await loadFixture(
         deployTodoListFixture,
       );
       const todoText = "Test Todo";
@@ -57,7 +57,7 @@ describe("TodoList", function () {
 
   describe("Toggle Todo", function () {
     it("Owner can toggle todo to completed", async function () {
-      const { todoList, owner } = await loadFixture(deployTodoListFixture);
+      const { todoList } = await loadFixture(deployTodoListFixture);
       const todoText = "Test Todo";
 
       await todoList.write.add([todoText]);
@@ -68,8 +68,9 @@ describe("TodoList", function () {
     });
 
     it("Non-owner can not toggle todo to completed", async function () {
-      const { todoList, todoListAsOtherAccount, owner, otherAccount } =
-        await loadFixture(deployTodoListFixture);
+      const { todoList, todoListAsOtherAccount } = await loadFixture(
+        deployTodoListFixture,
+      );
       const todoText = "Test Todo";
 
       await todoList.write.add([todoText]);
