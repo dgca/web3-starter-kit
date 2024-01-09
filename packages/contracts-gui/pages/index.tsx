@@ -6,11 +6,12 @@ import { TodoList } from "contracts";
 import { Text } from "ui-kit";
 
 import { ContractGUI } from "../components/ContractGUI/ContractGUI";
+import { ThemeToggle } from "../components/ThemeProvider/ThemeProvider";
 
 const contracts = {
   TodoList: {
     abi: TodoList,
-    address: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+    address: "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
   },
 };
 
@@ -26,9 +27,12 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
 
-      <nav className="flex justify-between items-center border-b py-2 px-4 mb-8">
-        <Text.H4 as="div">Contract GUI</Text.H4>
-        <ConnectButton />
+      <nav className="flex justify-between items-center border-b py-2 px-4 sticky top-0 bg-card">
+        <Text.H3 as="div">Contract GUI</Text.H3>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <ConnectButton />
+        </div>
       </nav>
 
       <main className="px-4">

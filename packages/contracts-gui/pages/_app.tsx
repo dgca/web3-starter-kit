@@ -7,6 +7,8 @@ import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { hardhat, base, baseGoerli } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
+import { ThemeProvider } from "../components/ThemeProvider/ThemeProvider";
+
 function configureChainsByEnvironment() {
   if (process.env.NEXT_PUBLIC_ENV === "local") {
     return configureChains([hardhat], [publicProvider()]);
@@ -41,11 +43,18 @@ const wagmiConfig = createConfig({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider chains={chains}>
+          <Component {...pageProps} />
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </ThemeProvider>
   );
 }
 

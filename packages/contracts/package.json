@@ -3,6 +3,7 @@
   "main": "./dist/index",
   "scripts": {
     "hardhat": "npx hardhat",
+    "node": "hardhat node",
     "test": "hardhat test",
     "build": "hardhat compile && ts-node ./lib/create-abi-exports.ts && tsup ./abis/index.ts --dts",
     "deploy-local": "hardhat run --network localhost scripts/deploy.ts"

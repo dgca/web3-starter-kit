@@ -27,4 +27,8 @@ contract TodoList is Ownable {
     function getAll() public view returns (Todo[] memory) {
         return todos;
     }
+
+    function isCompleted(uint _index) public view returns (bool) {
+        return todos[_index].completed;
+    }
 }
