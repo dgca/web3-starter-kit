@@ -77,7 +77,7 @@ export function ContractGUI({ contracts }: Props) {
         <div className="flex flex-col items-start gap-2">
           <Text.H4>Contract:</Text.H4>
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
               <Button variant="outline" size="lg">
                 {activeContract.name}.sol
               </Button>
