@@ -5,3 +5,5 @@ export * from "./components/shadcnui/dropdown-menu";
 export * from "./components/shadcnui/input";
 export * from "./components/shadcnui/label";
 export * from "./components/shadcnui/text";
+export * from "./components/shadcnui/switch";
+export * from "./components/shadcnui/textarea";

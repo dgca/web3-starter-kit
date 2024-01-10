@@ -8,8 +8,16 @@ contract TestSolidityTypes {
         return input;
     }
 
-    function echoInt(uint256 input) public pure returns (uint256) {
+    function getBoolean() public pure returns (bool) {
+        return true;
+    }
+
+    function echoUint(uint256 input) public pure returns (uint256) {
         return input;
+    }
+
+    function getUint() public pure returns (uint256) {
+        return 420;
     }
 
     function echoString(
@@ -18,14 +26,38 @@ contract TestSolidityTypes {
         return input;
     }
 
+    function getString() public pure returns (string memory) {
+        return "Hello World";
+    }
+
     function echoBytes(bytes memory input) public pure returns (bytes memory) {
         return input;
     }
 
-    function echoArray(
+    function getBytes() public pure returns (bytes memory) {
+        return "these are some bytes";
+    }
+
+    function echoAddress(address input) public pure returns (address) {
+        return input;
+    }
+
+    function getAddress() public view returns (address) {
+        return msg.sender;
+    }
+
+    function echoUintArray(
         uint256[] memory input
     ) public pure returns (uint256[] memory) {
         return input;
+    }
+
+    function getUintArray() public pure returns (uint256[] memory) {
+        uint256[] memory array = new uint256[](3);
+        array[0] = 1;
+        array[1] = 2;
+        array[2] = 3;
+        return array;
     }
 
     enum MockEnum {
@@ -36,6 +68,10 @@ contract TestSolidityTypes {
 
     function echoEnum(MockEnum input) public pure returns (MockEnum) {
         return input;
+    }
+
+    function getEnum() public pure returns (MockEnum) {
+        return MockEnum.Value2;
     }
 
     struct MockStruct {
@@ -49,8 +85,8 @@ contract TestSolidityTypes {
         return input;
     }
 
-    function echoAddress(address input) public pure returns (address) {
-        return input;
+    function getStruct() public pure returns (MockStruct memory) {
+        return MockStruct(420, "Nice");
     }
 
     // Note: Solidity functions cannot accept or return mappings directly,

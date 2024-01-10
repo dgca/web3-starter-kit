@@ -66,7 +66,7 @@ export function ContractGUI({ contracts }: Props) {
   const [writeFunctions, readFunctions] = useContractFunctions(activeContract);
 
   return (
-    <div className="container lg:max-w-5xl mx-auto grid gap-8 p-8">
+    <div className="container lg:max-w-5xl mx-auto grid gap-8 p-8 pb-48">
       <div>
         <div className="flex flex-col items-start gap-2">
           <Text.H4>Contract:</Text.H4>

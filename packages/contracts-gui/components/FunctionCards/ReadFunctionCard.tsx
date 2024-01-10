@@ -1,10 +1,8 @@
-import { Abi, AbiFunction } from "abitype";
+import { Abi, AbiFunction, AbiType } from "abitype";
 import { useState } from "react";
-import { Account } from "viem";
-import { useAccount, usePublicClient, useWalletClient } from "wagmi";
+import { usePublicClient } from "wagmi";
 
 import {
-  Input,
   Button,
   Label,
   Text,
@@ -18,6 +16,7 @@ import {
 import { cn } from "ui-utils";
 
 import { handleContractRead } from "../../utils/handleContractRead";
+import { useFunctionInputs } from "../FunctionInput/FunctionInput";
 
 export function ReadFunctionCard({
   fn,
@@ -34,6 +33,9 @@ export function ReadFunctionCard({
   } | null>(null);
   const publicClient = usePublicClient();
 
+  const { args, inputElements } = useFunctionInputs(fn);
+  console.log(args);
+
   return (
     <Card key={fn.name}>
       <CardHeader>
@@ -44,21 +46,10 @@ export function ReadFunctionCard({
           returns: {fn.outputs.map((output) => output.type).join(", ")}
         </CardDescription>
       </CardHeader>
-      {fn.inputs.length > 0 && (
+      {inputElements && (
         <CardContent>
           <Text.P className="mb-2">Inputs:</Text.P>
-          <div className="grid gap-4">
-            {fn.inputs.map((input, i) => {
-              return (
-                <div className="grid w-full items-center gap-2" key={i}>
-                  <Label>
-                    {input.type}: {input.name || "unnamed"}
-                  </Label>
-                  <Input />
-                </div>
-              );
-            })}
-          </div>
+          {inputElements}
         </CardContent>
       )}
       <CardContent>

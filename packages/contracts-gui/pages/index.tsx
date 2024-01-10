@@ -1,6 +1,7 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { usePublicClient } from "wagmi";
 
 import { TodoList, TestSolidityTypes } from "contracts";
 import { Text } from "ui-kit";
@@ -11,13 +12,23 @@ import { ThemeToggle } from "../components/ThemeProvider/ThemeProvider";
 const contracts = {
   TodoList: {
     abi: TodoList,
-    address: "0x0165878a594ca255338adfa4d48449f69242eb8f",
+    address: "0xc6e7df5e7b4f2a278906862b61205850344d4e7d",
   },
   TestSolidityTypes: {
     abi: TestSolidityTypes,
-    address: "0xa513e6e4b8f2a923d98304ec87f64353c4d5c853",
+    address: "0x59b670e9fa9d0a427751af201d676719a970857b",
   },
 };
+
+function useTestingTypes() {
+  const publicClient = usePublicClient();
+  publicClient.readContract({
+    address: "0x59b670e9fa9d0a427751af201d676719a970857b",
+    abi: TestSolidityTypes,
+    functionName: "echoArray",
+    args: [],
+  });
+}
 
 const Home: NextPage = () => {
   return (

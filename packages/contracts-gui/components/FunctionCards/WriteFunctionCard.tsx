@@ -4,9 +4,7 @@ import { Account } from "viem";
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
 
 import {
-  Input,
   Button,
-  Label,
   Text,
   Card,
   CardHeader,
@@ -18,6 +16,7 @@ import {
 import { cn } from "ui-utils";
 
 import { handleContractWrite } from "../../utils/handleContractWrite";
+import { useFunctionInputs } from "../FunctionInput/FunctionInput";
 
 export function WriteFunctionCard({
   fn,
@@ -39,6 +38,9 @@ export function WriteFunctionCard({
   const { data: walletClient } = useWalletClient();
   const account = useAccount();
 
+  const { args, inputElements } = useFunctionInputs(fn);
+  console.log(args);
+
   return (
     <Card key={fn.name}>
       <CardHeader>
@@ -49,21 +51,10 @@ export function WriteFunctionCard({
           returns: {fn.outputs.map((output) => output.type).join(", ")}
         </CardDescription>
       </CardHeader>
-      {fn.inputs.length > 0 && (
+      {inputElements && (
         <CardContent>
           <Text.P className="mb-2">Inputs:</Text.P>
-          <div className="grid gap-4">
-            {fn.inputs.map((input, i) => {
-              return (
-                <div className="grid w-full items-center gap-2" key={i}>
-                  <Label>
-                    {input.type}: {input.name || "unnamed"}
-                  </Label>
-                  <Input />
-                </div>
-              );
-            })}
-          </div>
+          {inputElements}
         </CardContent>
       )}
       <CardContent>
