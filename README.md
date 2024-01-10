@@ -4,6 +4,16 @@ Current status: This is what I'm git cloning to start a new web3 project.
 
 Future status: This is an npx tool that bootstraps a web3 project with a React front-end, choice of CSS framework, choice of solidity framework, and includes a contract debugging tool.
 
+## Requirements
+
+- Node 18
+- NPM
+
+## Getting started
+
+1. Clone this repo
+2. Run `npm install`
+
 ## Running commands
 
 This project uses [Nx](https://nx.dev). To run commands, use the following syntax: `nx <target> <project> <...options>`

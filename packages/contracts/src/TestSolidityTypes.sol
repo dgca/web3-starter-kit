@@ -2,6 +2,8 @@
 pragma solidity ^0.8.9;
 
 contract TestSolidityTypes {
+    uint256 public counter;
+
     function echoBoolean(bool input) public pure returns (bool) {
         return input;
     }
@@ -61,5 +63,10 @@ contract TestSolidityTypes {
 
     function getMappingValue(uint256 key) public view returns (string memory) {
         return exampleMapping[key];
+    }
+
+    function incrementCounter() public returns (uint256) {
+        counter++;
+        return counter;
     }
 }

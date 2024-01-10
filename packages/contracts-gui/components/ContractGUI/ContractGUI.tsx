@@ -1,25 +1,19 @@
-import { Abi, AbiFunction, Address } from "abitype";
+import { Abi, AbiFunction } from "abitype";
 import { useMemo, useState } from "react";
-import { usePublicClient } from "wagmi";
 
 import {
-  Input,
   Button,
-  Label,
   Text,
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-  CardDescription,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuItem,
 } from "ui-kit";
-import { cn } from "ui-utils";
+
+import { isReadFunction } from "../../utils/abiUtils";
+import { ReadFunctionCard } from "../FunctionCards/ReadFunctionCard";
+import { WriteFunctionCard } from "../FunctionCards/WriteFunctionCard";
 
 type Contract = {
   abi: Abi;
@@ -53,7 +47,7 @@ function useContractFunctions(contract: Contract) {
         continue;
       }
 
-      if (item.stateMutability === "view" || item.stateMutability === "pure") {
+      if (isReadFunction(item)) {
         readFunctions.push(item);
       } else {
         writeFunctions.push(item);
@@ -100,7 +94,7 @@ export function ContractGUI({ contracts }: Props) {
           <Text.H4 className="mb-4">Read functions:</Text.H4>
           <div className="grid w-full gap-4">
             {readFunctions.map((fn) => (
-              <FunctionCard
+              <ReadFunctionCard
                 key={fn.name}
                 fn={fn}
                 contractAddress={activeContract.address ?? ""}
@@ -114,8 +108,8 @@ export function ContractGUI({ contracts }: Props) {
         <div>
           <Text.H4 className="mb-4">Write functions:</Text.H4>
           <div className="grid w-full gap-4">
-            {readFunctions.map((fn) => (
-              <FunctionCard
+            {writeFunctions.map((fn) => (
+              <WriteFunctionCard
                 key={fn.name}
                 fn={fn}
                 contractAddress={activeContract.address ?? ""}
@@ -126,98 +120,5 @@ export function ContractGUI({ contracts }: Props) {
         </div>
       )}
     </div>
-  );
-}
-
-function FunctionCard({
-  fn,
-  contractAddress,
-  contractAbi,
-}: {
-  fn: AbiFunction;
-  contractAddress: string;
-  contractAbi: Abi;
-}) {
-  const [output, setOutput] = useState<{
-    status: "success" | "error";
-    data: string;
-  } | null>(null);
-  const publicClient = usePublicClient();
-
-  return (
-    <Card key={fn.name}>
-      <CardHeader>
-        <CardTitle>{fn.name}</CardTitle>
-        <CardDescription>
-          stateMutability: {fn.stateMutability}
-          <br />
-          returns: {fn.outputs.map((output) => output.type).join(", ")}
-        </CardDescription>
-      </CardHeader>
-      {fn.inputs.length > 0 && (
-        <CardContent>
-          <Text.P className="mb-2">Inputs:</Text.P>
-          {fn.inputs.map((input, i) => {
-            return (
-              <div className="grid w-full items-center gap-2" key={i}>
-                <Label>
-                  {input.type}: {input.name || "unnamed"}
-                </Label>
-                <Input />
-              </div>
-            );
-          })}
-        </CardContent>
-      )}
-      <CardContent>
-        <Text.P className="mb-2">Output:</Text.P>
-        {output === null ? (
-          <Text.Muted>—</Text.Muted>
-        ) : (
-          <div
-            className={cn(
-              "flex w-100 flex-col gap-2 rounded-lg px-3 py-2 text-sm",
-              {
-                "bg-muted": output.status === "success",
-                "bg-destructive": output.status === "error",
-                "text-destructive-foreground": output.status === "error",
-                "whitespace-pre": output.status === "error",
-              },
-            )}
-          >
-            {output.data}
-          </div>
-        )}
-      </CardContent>
-
-      <CardFooter>
-        <Button
-          className={cn("mr-2", "mb-2")}
-          onClick={async () => {
-            try {
-              const result = await publicClient.readContract({
-                address: contractAddress as Address,
-                abi: contractAbi,
-                functionName: fn.name,
-              });
-              setOutput({
-                status: "success",
-                data:
-                  typeof result === "string"
-                    ? result
-                    : JSON.stringify(result, null, 2),
-              });
-            } catch (err) {
-              setOutput({
-                status: "error",
-                data: err instanceof Error ? err.message : String(err),
-              });
-            }
-          }}
-        >
-          Call
-        </Button>
-      </CardFooter>
-    </Card>
   );
 }

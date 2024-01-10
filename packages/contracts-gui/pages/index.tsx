@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import { TodoList } from "contracts";
+import { TodoList, TestSolidityTypes } from "contracts";
 import { Text } from "ui-kit";
 
 import { ContractGUI } from "../components/ContractGUI/ContractGUI";
@@ -11,7 +11,11 @@ import { ThemeToggle } from "../components/ThemeProvider/ThemeProvider";
 const contracts = {
   TodoList: {
     abi: TodoList,
-    address: "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+    address: "0x0165878a594ca255338adfa4d48449f69242eb8f",
+  },
+  TestSolidityTypes: {
+    abi: TestSolidityTypes,
+    address: "0xa513e6e4b8f2a923d98304ec87f64353c4d5c853",
   },
 };
 
