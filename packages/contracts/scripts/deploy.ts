@@ -1,22 +1,32 @@
 import hre from "hardhat";
 
+import { updateContractAddresses } from "../lib/update-contract-addresses";
+
 async function deployTodoList() {
   const [deployerClient] = await hre.viem.getWalletClients();
   const todoList = await hre.viem.deployContract("TodoList", [
     deployerClient.account.address,
   ]);
-
   console.log(`TodoList deployed to ${todoList.address}`);
+  return todoList;
 }
 
 async function deployTestSolidityTypes() {
   const testSolidityTypes = await hre.viem.deployContract("TestSolidityTypes");
   console.log(`TestSolidityTypes deployed to ${testSolidityTypes.address}`);
+  return testSolidityTypes;
 }
 
 async function main() {
-  await deployTodoList();
-  await deployTestSolidityTypes();
+  const todoList = await deployTodoList();
+  const testSolidityTypes = await deployTestSolidityTypes();
+
+  if (hre.network.name === "localhost") {
+    updateContractAddresses("localhost", {
+      TodoList: todoList.address,
+      TestSolidityTypes: testSolidityTypes.address,
+    });
+  }
 }
 
 // We recommend this pattern to be able to use async/await everywhere

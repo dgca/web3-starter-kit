@@ -5,7 +5,7 @@
     "hardhat": "npx hardhat",
     "node": "hardhat node",
     "test": "hardhat test",
-    "build": "hardhat compile && ts-node ./lib/create-abi-exports.ts && tsup ./abis/index.ts --dts",
+    "build": "hardhat compile && ts-node ./lib/update-abi-exports.ts && tsup ./exports/index.ts --dts",
     "deploy-local": "hardhat run --network localhost scripts/deploy.ts",
     "dev": "npm run build && npm run deploy-local",
     "dev-watch": "watch 'npm run dev' ./src"

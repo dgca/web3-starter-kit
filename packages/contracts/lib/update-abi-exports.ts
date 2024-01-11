@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 
+import { updateExportIndexFile } from "./update-export-index-file";
+
 const contractArtifactsDir = path.join(path.resolve(), "artifacts", "src");
 
 const contractArtifacts = fs.readdirSync(contractArtifactsDir);
@@ -24,12 +26,14 @@ for (const folderName of contractArtifacts) {
   )} as const;\n\n`;
 }
 
-const distPath = path.join(path.resolve(), "abis");
+const distPath = path.join(path.resolve(), "exports");
 
 if (!fs.existsSync(distPath)) {
   fs.mkdirSync(distPath);
 }
 
-const filePath = path.join(distPath, "index.ts");
+const filePath = path.join(distPath, "abis.ts");
 
 fs.writeFileSync(path.join(filePath), fileContent);
+
+updateExportIndexFile();
