@@ -1,5 +1,5 @@
 import { Abi, AbiFunction } from "abitype";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import {
   Button,
@@ -9,6 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuItem,
+  Input,
 } from "ui-kit";
 
 import { isReadFunction } from "../../utils/abiUtils";
@@ -18,6 +19,10 @@ import { WriteFunctionCard } from "../FunctionCards/WriteFunctionCard";
 type Contract = {
   abi: Abi;
   address?: string;
+};
+
+type ContractWithName = Contract & {
+  name: string;
 };
 
 type Props = {
@@ -62,32 +67,48 @@ function useContractFunctions(contract: Contract) {
 
 export function ContractGUI({ contracts }: Props) {
   const contractsArray = useContractsArray(contracts);
-  const [activeContract, setActiveContract] = useState(contractsArray[0]);
+  const [activeContract, setActiveContract] = useState<ContractWithName>(
+    contractsArray[0],
+  );
+  const [activeContractAddress, setContractAddress] = useState<string>(
+    activeContract.address ?? "",
+  );
   const [writeFunctions, readFunctions] = useContractFunctions(activeContract);
+
+  const handleUpdateContract = useCallback((contract: ContractWithName) => {
+    setActiveContract(contract);
+    setContractAddress(contract.address ?? "");
+  }, []);
 
   return (
     <div className="container lg:max-w-5xl mx-auto grid gap-8 p-8 pb-48">
-      <div>
-        <div className="flex flex-col items-start gap-2">
-          <Text.H4>Contract:</Text.H4>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="lg">
-                {activeContract.name}.sol
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {contractsArray.map((contract) => (
-                <DropdownMenuItem
-                  key={contract.name}
-                  onSelect={() => setActiveContract(contract)}
-                >
-                  <DropdownMenuLabel>{contract.name}.sol</DropdownMenuLabel>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+      <div className="flex flex-col items-start gap-2">
+        <Text.H4 className="mb-2">Contract:</Text.H4>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="lg">
+              {activeContract.name}.sol
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {contractsArray.map((contract) => (
+              <DropdownMenuItem
+                key={contract.name}
+                onSelect={() => handleUpdateContract(contract)}
+              >
+                <DropdownMenuLabel>{contract.name}.sol</DropdownMenuLabel>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Input
+          aria-label="Contract address"
+          placeholder="Contract address"
+          value={activeContractAddress}
+          onChange={(e) => {
+            setContractAddress(e.target.value);
+          }}
+        />
       </div>
       {readFunctions.length > 0 && (
         <div>
@@ -97,7 +118,7 @@ export function ContractGUI({ contracts }: Props) {
               <ReadFunctionCard
                 key={fn.name}
                 fn={fn}
-                contractAddress={activeContract.address ?? ""}
+                contractAddress={activeContractAddress ?? ""}
                 contractAbi={activeContract.abi}
               />
             ))}
@@ -112,7 +133,7 @@ export function ContractGUI({ contracts }: Props) {
               <WriteFunctionCard
                 key={fn.name}
                 fn={fn}
-                contractAddress={activeContract.address ?? ""}
+                contractAddress={activeContractAddress ?? ""}
                 contractAbi={activeContract.abi}
               />
             ))}

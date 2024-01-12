@@ -1,7 +1,9 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Address } from "abitype";
 import type { NextPage } from "next";
 import { Creepster } from "next/font/google";
 import Head from "next/head";
+import { usePublicClient } from "wagmi";
 
 import { TodoList, TestSolidityTypes, contractAddresses } from "contracts";
 import { cn } from "ui-utils";
@@ -24,6 +26,18 @@ const creepster = Creepster({
   subsets: ["latin"],
   weight: "400",
 });
+
+export async function useTestContract() {
+  const publicClient = usePublicClient();
+  const data = await publicClient.readContract({
+    address: contractAddresses.localhost.TestSolidityTypes as Address,
+    abi: TestSolidityTypes,
+    functionName: "echoStruct",
+    args: [],
+  });
+
+  return data;
+}
 
 const Home: NextPage = () => {
   return (

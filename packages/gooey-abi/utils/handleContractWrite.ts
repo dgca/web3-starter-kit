@@ -1,4 +1,4 @@
-import { Abi } from "abitype";
+import { Abi, AbiFunction } from "abitype";
 import { Account, PublicClient, WalletClient, stringify } from "viem";
 
 import { assertAddress } from "./abiUtils";
@@ -9,7 +9,8 @@ export async function handleContractWrite({
   account,
   address,
   abi,
-  functionName,
+  fn,
+  args,
   simulate = false,
 }: {
   publicClient: PublicClient;
@@ -17,7 +18,8 @@ export async function handleContractWrite({
   account: Account;
   address: string;
   abi: Abi;
-  functionName: string;
+  fn: AbiFunction;
+  args: unknown[] | undefined;
   simulate?: boolean;
 }): Promise<{
   status: "success" | "error";
@@ -28,11 +30,23 @@ export async function handleContractWrite({
 }> {
   try {
     assertAddress(address);
+
+    const formattedArgs = fn.inputs.map((input, i) => {
+      if (!args) {
+        throw new Error("No args provided");
+      }
+      if (input.type === "tuple" || input.type.endsWith("[]")) {
+        return JSON.parse(args[i] as string);
+      }
+      return args[i];
+    });
+
     const { request, result } = await publicClient.simulateContract({
       account,
       address,
       abi,
-      functionName,
+      functionName: fn.name,
+      args: formattedArgs.length ? formattedArgs : undefined,
     });
 
     if (simulate) {

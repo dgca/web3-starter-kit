@@ -1,10 +1,9 @@
-import { Abi, AbiFunction, AbiType } from "abitype";
+import { Abi, AbiFunction } from "abitype";
 import { useState } from "react";
 import { usePublicClient } from "wagmi";
 
 import {
   Button,
-  Label,
   Text,
   Card,
   CardHeader,
@@ -34,41 +33,44 @@ export function ReadFunctionCard({
   const publicClient = usePublicClient();
 
   const { args, inputElements } = useFunctionInputs(fn);
-  console.log(args);
 
   return (
     <Card key={fn.name}>
       <CardHeader>
         <CardTitle>{fn.name}</CardTitle>
-        <CardDescription>
-          stateMutability: {fn.stateMutability}
-          <br />
-          returns: {fn.outputs.map((output) => output.type).join(", ")}
-        </CardDescription>
+        <CardDescription>stateMutability: {fn.stateMutability}</CardDescription>
       </CardHeader>
-      {inputElements && (
-        <CardContent>
-          <Text.P className="mb-2">Inputs:</Text.P>
-          {inputElements}
-        </CardContent>
-      )}
       <CardContent>
-        <Text.P className="mb-2">Output:</Text.P>
+        <Text.P className="mb-2">Inputs:</Text.P>
+        {inputElements ?? <Text.Muted>—</Text.Muted>}
+      </CardContent>
+      <CardContent>
+        <div className="mb-2">
+          <Text.P className="mb-0">Output:</Text.P>
+          <Text.Small className="text-muted-foreground">
+            returns:{" "}
+            {fn.outputs.length
+              ? fn.outputs.map((output) => output.type).join(", ")
+              : "—"}
+          </Text.Small>
+        </div>
         {output === null ? (
           <Text.Muted>—</Text.Muted>
         ) : (
-          <div
-            className={cn(
-              "flex w-100 flex-col gap-2 rounded-lg px-3 py-2 text-sm whitespace-pre",
-              {
-                "bg-muted": output.status === "success",
-                "bg-destructive": output.status === "error",
-                "text-destructive-foreground": output.status === "error",
-              },
-            )}
-          >
-            {output.result}
-          </div>
+          <>
+            <div
+              className={cn(
+                "flex w-100 flex-col gap-2 rounded-lg px-3 py-2 text-sm whitespace-pre font-mono",
+                {
+                  "bg-muted": output.status === "success",
+                  "bg-destructive": output.status === "error",
+                  "text-destructive-foreground": output.status === "error",
+                },
+              )}
+            >
+              {output.result}
+            </div>
+          </>
         )}
       </CardContent>
 
@@ -80,7 +82,8 @@ export function ReadFunctionCard({
               publicClient,
               address: contractAddress,
               abi: contractAbi,
-              functionName: fn.name,
+              fn,
+              args,
             });
             setOutput(data);
           }}

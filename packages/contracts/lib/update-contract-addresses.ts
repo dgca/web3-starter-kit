@@ -36,7 +36,7 @@ export function updateContractAddresses(
     addressMap,
     null,
     2,
-  )};`;
+  )} as const;`;
 
   fs.writeFileSync(addressesFilePath, fileContents);
   updateExportIndexFile();

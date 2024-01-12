@@ -60,6 +60,20 @@ contract TestSolidityTypes {
         return array;
     }
 
+    function echoBoolArray(
+        bool[] memory input
+    ) public pure returns (bool[] memory) {
+        return input;
+    }
+
+    function getBoolArray() public pure returns (bool[] memory) {
+        bool[] memory array = new bool[](3);
+        array[0] = true;
+        array[1] = false;
+        array[2] = true;
+        return array;
+    }
+
     enum MockEnum {
         Value1,
         Value2,

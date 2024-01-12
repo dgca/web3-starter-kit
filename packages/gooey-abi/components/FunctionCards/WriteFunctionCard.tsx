@@ -39,26 +39,27 @@ export function WriteFunctionCard({
   const account = useAccount();
 
   const { args, inputElements } = useFunctionInputs(fn);
-  console.log(args);
 
   return (
     <Card key={fn.name}>
       <CardHeader>
         <CardTitle>{fn.name}</CardTitle>
-        <CardDescription>
-          stateMutability: {fn.stateMutability}
-          <br />
-          returns: {fn.outputs.map((output) => output.type).join(", ")}
-        </CardDescription>
+        <CardDescription>stateMutability: {fn.stateMutability}</CardDescription>
       </CardHeader>
-      {inputElements && (
-        <CardContent>
-          <Text.P className="mb-2">Inputs:</Text.P>
-          {inputElements}
-        </CardContent>
-      )}
       <CardContent>
-        <Text.P className="mb-2">Output:</Text.P>
+        <Text.P className="mb-2">Inputs:</Text.P>
+        {inputElements ?? <Text.Muted>—</Text.Muted>}
+      </CardContent>
+      <CardContent>
+        <div className="mb-2">
+          <Text.P className="mb-0">Output:</Text.P>
+          <Text.Small className="text-muted-foreground">
+            returns:{" "}
+            {fn.outputs.length
+              ? fn.outputs.map((output) => output.type).join(", ")
+              : "—"}
+          </Text.Small>
+        </div>
         {output === null ? (
           <Text.Muted>—</Text.Muted>
         ) : (
@@ -95,7 +96,8 @@ export function WriteFunctionCard({
               account: account as unknown as Account,
               address: contractAddress,
               abi: contractAbi,
-              functionName: fn.name,
+              fn,
+              args,
             });
             setOutput(data);
           }}
@@ -112,7 +114,8 @@ export function WriteFunctionCard({
               account: account as unknown as Account,
               address: contractAddress,
               abi: contractAbi,
-              functionName: fn.name,
+              fn,
+              args,
               simulate: true,
             });
             setOutput(data);
