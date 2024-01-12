@@ -33,8 +33,7 @@ Learn more about running Nx commands [in the Nx docs](https://nx.dev/core-featur
 - Start local node: `nx node contracts`
 - Compile contracts and run build script: `nx build contracts`
 - Deploy to local node: `nx deploy-local contracts`
-- Compile contracts, run build script, and deploy to local node: `nx dev contracts`
-- Same as above, and also watch for changes: `nx dev-watch contracts`
+- Compile contracts, run build script, deploy to local node, and watch for changes: `nx dev contracts`
 
 ### `ui-kit`
 

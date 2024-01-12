@@ -7,3 +7,4 @@ export * from "./components/shadcnui/label";
 export * from "./components/shadcnui/text";
 export * from "./components/shadcnui/switch";
 export * from "./components/shadcnui/textarea";
+export * from "./components/shadcnui/radio-group";
