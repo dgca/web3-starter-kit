@@ -89,7 +89,6 @@ export function WriteFunctionCard({
         <Button
           className={cn("mr-2", "mb-2")}
           onClick={async () => {
-            if (!walletClient) return;
             const data = await handleContractWrite({
               publicClient,
               walletClient,
@@ -107,7 +106,6 @@ export function WriteFunctionCard({
         <Button
           className={cn("mr-2", "mb-2")}
           onClick={async () => {
-            if (!walletClient) return;
             const data = await handleContractWrite({
               publicClient,
               walletClient,

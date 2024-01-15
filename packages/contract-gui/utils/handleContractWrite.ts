@@ -14,7 +14,7 @@ export async function handleContractWrite({
   simulate = false,
 }: {
   publicClient: PublicClient;
-  walletClient: WalletClient;
+  walletClient?: WalletClient | null;
   account: Account;
   address: string;
   abi: Abi;
@@ -29,7 +29,15 @@ export async function handleContractWrite({
   };
 }> {
   try {
+    if (!walletClient) {
+      throw new Error(
+        "Wallet client not provided. Please connect your wallet.",
+      );
+    }
+
     assertAddress(address);
+
+    console.log({ walletClient });
 
     const formattedArgs = fn.inputs.map((input, i) => {
       if (!args) {
