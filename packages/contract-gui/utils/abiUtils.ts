@@ -1,4 +1,4 @@
-import { AbiFunction, AbiType } from "abitype";
+import { AbiFunction } from "abitype";
 import { Address } from "viem";
 
 export function isReadFunction(fn: AbiFunction) {
@@ -15,5 +15,3 @@ export function assertAddress(
     throw new Error(`Address ${maybeAddress} is not 42 characters long`);
   }
 }
-
-export function formatAbiType(type: AbiType, value: unknown) {}

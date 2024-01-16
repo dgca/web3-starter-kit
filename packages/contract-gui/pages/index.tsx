@@ -1,31 +1,23 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import { Creepster } from "next/font/google";
 import Head from "next/head";
+import { ComponentProps } from "react";
 
-import { TodoList, TestSolidityTypes, contractAddresses } from "contracts";
 import { cn } from "ui-utils";
 
 import { ContractGUI } from "../components/ContractGUI/ContractGUI";
 import { ThemeToggle } from "../components/ThemeProvider/ThemeProvider";
-
-const contracts = {
-  TodoList: {
-    abi: TodoList,
-    address: contractAddresses.localhost.TodoList,
-  },
-  TestSolidityTypes: {
-    abi: TestSolidityTypes,
-    address: contractAddresses.localhost.TestSolidityTypes,
-  },
-};
+import { getContractsMap } from "../lib/getContractsMap";
 
 const creepster = Creepster({
   subsets: ["latin"],
   weight: "400",
 });
 
-const Home: NextPage = () => {
+type Props = ComponentProps<typeof ContractGUI>;
+
+export default function Home({ contracts }: Props) {
   return (
     <div>
       <Head>
@@ -52,6 +44,13 @@ const Home: NextPage = () => {
       </main>
     </div>
   );
-};
+}
 
-export default Home;
+export const getServerSideProps = (async () => {
+  const contractsMap = await getContractsMap();
+  return {
+    props: {
+      contracts: contractsMap,
+    },
+  };
+}) satisfies GetServerSideProps<Props>;
