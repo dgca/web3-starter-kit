@@ -5,7 +5,7 @@
     "node": "hardhat node",
     "compile": "hardhat compile",
     "test": "hardhat test",
-    "gui": "contract-gui"
+    "gui": "start-contract-gui"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
@@ -22,6 +22,6 @@
     "solidity-coverage": "^0.8.1",
     "ts-node": "^10.9.2",
     "viem": "^1.15.1",
-    "contract-gui": "*"
+    "@type_of/contract-gui": "*"
   }
 }

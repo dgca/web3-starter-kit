@@ -1,8 +1,9 @@
 {
-  "name": "contract-gui",
+  "name": "@type_of/contract-gui",
+  "license": "MIT",
   "version": "0.0.1",
   "bin": {
-    "contract-gui": "./bin/index.mjs"
+    "start-contract-gui": "./bin/start-contract-gui.mjs"
   },
   "scripts": {
     "dev": "next dev --port 3001",
