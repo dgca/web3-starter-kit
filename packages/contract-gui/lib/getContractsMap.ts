@@ -5,14 +5,14 @@ import { buildContractsMap } from "./buildContractsMap";
 
 async function getLocalContractsMap() {
   if (
-    process.env.NODE_ENV === "production" ||
-    process.env.CONTRACT_GUI_USE_LOCAL_CONTRACTS_MAP !== "true"
+    process.env.NEXT_PUBLIC_USE_LOCAL_CONFIG !== "true" ||
+    process.env.NODE_ENV === "production"
   ) {
     return null;
   }
 
-  const contractsMap = await import("../contracts-map/index");
-  return contractsMap.default;
+  const contractsMap = await import("../local-config/index");
+  return contractsMap.default.contracts;
 }
 
 export async function getContractsMap() {

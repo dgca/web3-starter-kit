@@ -4,5 +4,9 @@
   "contracts": ["Lock"],
   "defaultAddresses": {
     "Lock": "0x0000000000000000000000000000000000000000"
+  },
+  "chains": {
+    "hardhat": true,
+    "baseSepolia": true
   }
 }

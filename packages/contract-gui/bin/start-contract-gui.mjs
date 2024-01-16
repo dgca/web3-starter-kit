@@ -9,10 +9,8 @@ const configBasePath = resolve();
 const configRelativePath = argv[2] ?? "./contract-gui-config.json";
 const configPath = join(configBasePath, configRelativePath);
 
-async function getConfig() {
-  const configFile = readFileSync(configPath, "utf8");
-  return JSON.parse(configFile);
-}
+const configFile = readFileSync(configPath, "utf8");
+const config = JSON.parse(configFile);
 
 function startNextServer(port = 3001) {
   try {
@@ -27,6 +25,7 @@ function startNextServer(port = 3001) {
         ...process.env,
         CONTRACT_GUI_BASE_PATH: configBasePath,
         CONTRACT_GUI_CONFIG_PATH: configPath,
+        CONTRACT_GUI_CHAINS: JSON.stringify(config.chains),
       },
     });
 
@@ -46,7 +45,6 @@ function startNextServer(port = 3001) {
 }
 
 async function main() {
-  const config = await getConfig();
   startNextServer(config.port);
 }
 

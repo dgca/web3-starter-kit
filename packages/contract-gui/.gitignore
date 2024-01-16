@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-/contracts-map
+# Configuration for testing and running the app locally
+/local-config
 
 # dependencies
 /node_modules
