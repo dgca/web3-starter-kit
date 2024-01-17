@@ -33,16 +33,6 @@ function startNextServer(port = 3001) {
       },
     });
 
-    console.log("bin", {
-      CONTRACT_GUI_BASE_PATH: configBasePath,
-      CONTRACT_GUI_CONFIG_PATH: configPath,
-      CONTRACT_GUI_CHAINS: JSON.stringify(config.chains),
-      CONTRACT_GUI_WALLETCONNECT_ID:
-        process.env.CONTRACT_GUI_WALLETCONNECT_ID ||
-        config.walletConnectId ||
-        "",
-    });
-
     child.on("error", (err) => {
       console.error(`Failed to start subprocess: ${err.message}`);
     });

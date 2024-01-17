@@ -20,7 +20,7 @@ type Props = ComponentProps<typeof ContractGUI>;
 
 export default function Home({ contracts }: Props) {
   return (
-    <div>
+    <>
       <Head>
         <title>Contract GUI</title>
         <meta
@@ -29,44 +29,45 @@ export default function Home({ contracts }: Props) {
         />
         <link href="/favicon.ico" rel="icon" />
       </Head>
+      <div className="flex flex-col items-stretch min-h-svh">
+        <nav className="flex justify-between items-center border-b py-2 px-4 sticky top-0 bg-card">
+          <span className={cn(creepster.className, "text-4xl")}>
+            Contract GUI
+          </span>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <ConnectButton />
+          </div>
+        </nav>
 
-      <nav className="flex justify-between items-center border-b py-2 px-4 sticky top-0 bg-card">
-        <span className={cn(creepster.className, "text-4xl")}>
-          Contract GUI
-        </span>
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-          <ConnectButton />
-        </div>
-      </nav>
+        <main className="px-4 flex-grow">
+          <ContractGUI contracts={contracts} />
+        </main>
 
-      <main className="px-4">
-        <ContractGUI contracts={contracts} />
-      </main>
-
-      <footer className="text-center py-6">
-        <Text.Small>
-          Built by{" "}
-          <a
-            href="https://warpcast.com/typeof.eth"
-            className="hover:underline"
-            target="_blank"
-            rel="noopener"
-          >
-            typeof.eth
-          </a>{" "}
-          •{" "}
-          <a
-            href="https://github.com/dgca/web3-starter-kit/tree/main/packages/contract-gui"
-            className="hover:underline"
-            target="_blank"
-            rel="noopener"
-          >
-            Github
-          </a>
-        </Text.Small>
-      </footer>
-    </div>
+        <footer className="text-center py-6">
+          <Text.Small>
+            Built by{" "}
+            <a
+              href="https://warpcast.com/typeof.eth"
+              className="hover:underline"
+              target="_blank"
+              rel="noopener"
+            >
+              typeof.eth
+            </a>{" "}
+            •{" "}
+            <a
+              href="https://github.com/dgca/web3-starter-kit/tree/main/packages/contract-gui"
+              className="hover:underline"
+              target="_blank"
+              rel="noopener"
+            >
+              Github
+            </a>
+          </Text.Small>
+        </footer>
+      </div>
+    </>
   );
 }
 
