@@ -6,10 +6,23 @@ import type { AppProps } from "next/app";
 import { WagmiConfig } from "wagmi";
 
 import { ThemeProvider } from "../components/ThemeProvider/ThemeProvider";
-import { useWeb3Config } from "../lib/web3config";
+import { useWeb3Config, ChainConfig } from "../lib/web3config";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
-  const { chains, wagmiConfig } = useWeb3Config();
+type Props = AppProps & {
+  walletConnectId: string;
+  chainConfig: ChainConfig;
+};
+
+export default function App({
+  Component,
+  pageProps,
+  walletConnectId,
+  chainConfig,
+}: Props) {
+  const { chains, wagmiConfig } = useWeb3Config({
+    walletConnectId,
+    chainConfig,
+  });
 
   return (
     <ThemeProvider
@@ -28,3 +41,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     </ThemeProvider>
   );
 }
+
+App.getInitialProps = async () => {
+  const walletConnectId = process.env.CONTRACT_GUI_WALLETCONNECT_ID || "";
+  const chainConfig = JSON.parse(process.env.CONTRACT_GUI_CHAINS || "{}");
+
+  return {
+    walletConnectId,
+    chainConfig,
+  };
+};

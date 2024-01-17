@@ -2,11 +2,12 @@
   "port": 3001,
   "artifactsDir": "./artifacts/contracts",
   "contracts": ["Lock"],
+  "walletConnectId": "6aa783ad4de9a655f4e4537ef6b909c6",
   "defaultAddresses": {
     "Lock": "0x0000000000000000000000000000000000000000"
   },
   "chains": {
     "hardhat": true,
-    "baseSepolia": true
+    "baseSepolia": "https://base-sepolia.g.alchemy.com/v2/jQHi5fdn31Y_CEw6l2Tf27oF4QZGU-_P"
   }
 }

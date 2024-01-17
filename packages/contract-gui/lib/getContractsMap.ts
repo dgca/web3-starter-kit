@@ -2,17 +2,16 @@ import fs from "fs";
 import { join } from "path";
 
 import { buildContractsMap } from "./buildContractsMap";
+import { getLocalConfig } from "../utils/getLocalConfig";
 
 async function getLocalContractsMap() {
-  if (
-    process.env.NEXT_PUBLIC_USE_LOCAL_CONFIG !== "true" ||
-    process.env.NODE_ENV === "production"
-  ) {
+  const localConfig = await getLocalConfig();
+
+  if (!localConfig) {
     return null;
   }
 
-  const contractsMap = await import("../local-config/index");
-  return contractsMap.default.contracts;
+  return localConfig.contracts;
 }
 
 export async function getContractsMap() {
