@@ -2,6 +2,17 @@
 
 `@type_of/contract-gui` is a tool for Solidity smart contract developers, enabling you to quickly spin up a web application to interact with your contracts while in development. Ideal for Hardhat and Foundry projects, this package uses your compiled contract ABIs to create an interactive GUI.
 
+## Features
+
+- Contract Interaction: Easily interact with the contracts in your project. Choose a contract to see all read and write functions available.
+- Transaction Feedback: Get immediate feedback on the success of your transactions with returned data visible.
+- Wallet Integration: Uses Rainbowkit for wallet connectivity.
+
+## Requirements
+
+- A Solidity project with compiled contracts.
+- Node.js >=18.0.0
+
 ## Installation
 
 If your project does not have a `package.json`, create one. Then, run the following command:
@@ -61,17 +72,6 @@ npm run gui
 ```
 
 This command serves a website (`http://localhost:3001` by default) where you can interact with your contracts.
-
-## Features
-
-- Contract Interaction: Easily interact with the contracts in your project. Choose a contract to see all read and write functions available.
-- Transaction Feedback: Get immediate feedback on the success of your transactions with returned data visible.
-- Wallet Integration: Uses Rainbowkit for wallet connectivity.
-
-## Requirements
-
-- A Solidity project with compiled contracts.
-- Node.js >=18.0.0
 
 ## Contributing
 
