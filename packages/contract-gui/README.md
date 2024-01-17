@@ -2,6 +2,8 @@
 
 `@type_of/contract-gui` is a tool for Solidity smart contract developers, enabling you to quickly spin up a web application to interact with your contracts while in development. Ideal for Hardhat and Foundry projects, this package uses your compiled contract ABIs to create an interactive GUI.
 
+[**🎥 Video demo**](https://www.youtube.com/watch?v=s5IMzkf2uak)
+
 ## Features
 
 - **Contract Interaction:** Easily interact with the contracts in your project. Choose a contract to see all read and write functions available.
@@ -18,7 +20,7 @@
 If your project does not have a `package.json`, create one. Then, run the following command:
 
 ```bash
-npm install @type_of/contract-gui
+npm i -D @type_of/contract-gui
 ```
 
 ## Usage
