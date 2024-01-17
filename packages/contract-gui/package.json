@@ -9,7 +9,8 @@
     "dev": "next dev --port 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pack": "npm run build && npm pack --pack-destination ~/dev/npm-packages"
   },
   "files": [
     "./.next/**/*",
