@@ -31,10 +31,10 @@ To use `@type_of/contract-gui`, you must define a `contract-gui-config.json` fil
 {
   "port": 3001,
   "artifactsDir": "./artifacts/contracts",
-  "contracts": ["Todos, Lock"],
+  "contracts": ["CoolToken", "BasedHams"],
   "walletConnectId": "abc123abc123abc123abc123abc123ab",
   "defaultAddresses": {
-    "Lock": "0x0000000000000000000000000000000000000000"
+    "CoolToken": "0x0000000000000000000000000000000000000000"
   },
   "chains": {
     "hardhat": true,
