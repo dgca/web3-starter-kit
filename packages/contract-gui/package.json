@@ -1,9 +1,14 @@
 {
   "name": "@type_of/contract-gui",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "bin": {
     "start-contract-gui": "./bin/start-contract-gui.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dgca/web3-starter-kit",
+    "directory": "packages/contract-gui"
   },
   "scripts": {
     "dev": "next dev --port 3001",

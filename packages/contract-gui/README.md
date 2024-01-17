@@ -4,9 +4,9 @@
 
 ## Features
 
-- Contract Interaction: Easily interact with the contracts in your project. Choose a contract to see all read and write functions available.
-- Transaction Feedback: Read contract data, submit write transactions, and simulate write transactions. See the result of your transaction in the web app. If your transaction fails, you'll see the error message.
-- Wallet Integration: Uses Rainbowkit for wallet connectivity.
+- **Contract Interaction:** Easily interact with the contracts in your project. Choose a contract to see all read and write functions available.
+- **Transaction Feedback:** Read contract data, submit write transactions, and simulate write transactions. See the result of your transaction in the web app. If your transaction fails, you'll see the error message.
+- **Wallet Integration:** Uses Rainbowkit for wallet connectivity.
 
 ## Requirements
 
@@ -25,7 +25,7 @@ npm install @type_of/contract-gui
 
 ### Config
 
-To use `@type_of/contract-gui`, you must define a contract-gui-config.json file at the root of your project. Here's an example of the configuration file:
+To use `@type_of/contract-gui`, you must define a `contract-gui-config.json` file at the root of your project. Here's an example of the configuration file:
 
 ```json
 {
