@@ -5,7 +5,7 @@
 ## Features
 
 - Contract Interaction: Easily interact with the contracts in your project. Choose a contract to see all read and write functions available.
-- Transaction Feedback: Get immediate feedback on the success of your transactions with returned data visible.
+- Transaction Feedback: Read contract data, submit write transactions, and simulate write transactions. See the result of your transaction in the web app. If your transaction fails, you'll see the error message.
 - Wallet Integration: Uses Rainbowkit for wallet connectivity.
 
 ## Requirements
