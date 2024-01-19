@@ -32,7 +32,17 @@ async function getConfiguredChains(chainConfig: ChainConfig) {
   Object.entries(selectedChains).forEach(([chain, value]) => {
     // @ts-expect-error @todo: Unable type dynamically defined chains
     // eslint-disable-next-line import/namespace
-    chains.push(wagmiChains[chain]);
+    const wagmiChain = wagmiChains[chain];
+
+    if (!wagmiChain) {
+      throw new Error(
+        `Unknown chain: "${chain}"
+
+Please ensure chains match the name of the exported wagmi chains.`,
+      );
+    }
+
+    chains.push(wagmiChain);
     const provider =
       value === true ? publicProvider() : createJsonRpcProvider(value);
     providers.push(provider);
@@ -48,6 +58,7 @@ export function useWeb3Config({
   walletConnectId: string;
   chainConfig: ChainConfig;
 }) {
+  const [error, setError] = useState<Error | null>(null);
   const [config, setConfig] = useState<{
     chains?: Chain[];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,42 +68,50 @@ export function useWeb3Config({
     wagmiConfig: undefined,
   });
 
+  if (error) {
+    throw error;
+  }
+
   useEffect(() => {
     async function handleConfig() {
-      const { chains, publicClient, webSocketPublicClient } =
-        await getConfiguredChains(chainConfig);
+      try {
+        const { chains, publicClient, webSocketPublicClient } =
+          await getConfiguredChains(chainConfig);
 
-      const localConfig = await getLocalConfig();
-      const projectId = localConfig?.walletConnectId ?? walletConnectId;
+        const localConfig = await getLocalConfig();
+        const projectId = localConfig?.walletConnectId ?? walletConnectId;
 
-      const { wallets } = getDefaultWallets({
-        appName: "Contracts GUI",
-        projectId,
-        chains,
-      });
+        const { wallets } = getDefaultWallets({
+          appName: "Contracts GUI",
+          projectId,
+          chains,
+        });
 
-      const connectors = connectorsForWallets([
-        {
-          groupName: "Popular",
-          wallets: projectId
-            ? wallets[0].wallets
-            : wallets[0].wallets.filter(
-                ({ id }) => id !== "walletConnect" && id !== "rainbow",
-              ),
-        },
-      ]);
+        const connectors = connectorsForWallets([
+          {
+            groupName: "Popular",
+            wallets: projectId
+              ? wallets[0].wallets
+              : wallets[0].wallets.filter(
+                  ({ id }) => id !== "walletConnect" && id !== "rainbow",
+                ),
+          },
+        ]);
 
-      const wagmiConfig = createConfig({
-        autoConnect: true,
-        connectors,
-        publicClient,
-        webSocketPublicClient,
-      });
+        const wagmiConfig = createConfig({
+          autoConnect: true,
+          connectors,
+          publicClient,
+          webSocketPublicClient,
+        });
 
-      setConfig({
-        chains,
-        wagmiConfig,
-      });
+        setConfig({
+          chains,
+          wagmiConfig,
+        });
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error(String(err)));
+      }
     }
 
     handleConfig();

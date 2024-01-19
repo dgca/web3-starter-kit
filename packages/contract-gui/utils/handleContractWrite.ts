@@ -37,8 +37,6 @@ export async function handleContractWrite({
 
     assertAddress(address);
 
-    console.log({ walletClient });
-
     const formattedArgs = fn.inputs.map((input, i) => {
       if (!args) {
         throw new Error("No args provided");

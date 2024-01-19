@@ -5,6 +5,7 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import type { AppProps } from "next/app";
 import { WagmiConfig } from "wagmi";
 
+import { ErrorBoundary } from "../components/ErrorBoundary/ErrorBoundary";
 import { ThemeProvider } from "../components/ThemeProvider/ThemeProvider";
 import { useWeb3Config, ChainConfig } from "../lib/web3config";
 
@@ -13,7 +14,7 @@ type Props = AppProps & {
   chainConfig: ChainConfig;
 };
 
-export default function App({
+function AppContents({
   Component,
   pageProps,
   walletConnectId,
@@ -33,12 +34,20 @@ export default function App({
     >
       {chains && wagmiConfig && (
         <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains}>
+          <RainbowKitProvider chains={chains} initialChain={0}>
             <Component {...pageProps} />
           </RainbowKitProvider>
         </WagmiConfig>
       )}
     </ThemeProvider>
+  );
+}
+
+export default function App(props: Props) {
+  return (
+    <ErrorBoundary>
+      <AppContents {...props} />
+    </ErrorBoundary>
   );
 }
 

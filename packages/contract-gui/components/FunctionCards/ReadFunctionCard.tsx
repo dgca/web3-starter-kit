@@ -16,6 +16,7 @@ import { cn } from "ui-utils";
 
 import { handleContractRead } from "../../utils/handleContractRead";
 import { useFunctionInputs } from "../FunctionInput/FunctionInput";
+import { OutputRenderer } from "../OutputRenderer/OutputRenderer";
 
 export function ReadFunctionCard({
   fn,
@@ -35,7 +36,7 @@ export function ReadFunctionCard({
   const { args, inputElements } = useFunctionInputs(fn);
 
   return (
-    <Card key={fn.name}>
+    <Card key={fn.name} className="min-w-0">
       <CardHeader>
         <CardTitle>{fn.name}</CardTitle>
         <CardDescription>stateMutability: {fn.stateMutability}</CardDescription>
@@ -54,23 +55,10 @@ export function ReadFunctionCard({
               : "—"}
           </Text.Small>
         </div>
-        {output === null ? (
-          <Text.Muted>—</Text.Muted>
-        ) : (
-          <>
-            <div
-              className={cn(
-                "flex w-100 flex-col gap-2 rounded-lg px-3 py-2 text-sm whitespace-pre font-mono",
-                {
-                  "bg-muted": output.status === "success",
-                  "bg-destructive": output.status === "error",
-                  "text-destructive-foreground": output.status === "error",
-                },
-              )}
-            >
-              {output.result}
-            </div>
-          </>
+        {output !== null && (
+          <OutputRenderer status={output.status}>
+            {output.result}
+          </OutputRenderer>
         )}
       </CardContent>
 
