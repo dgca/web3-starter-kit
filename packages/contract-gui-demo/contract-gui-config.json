@@ -1,8 +1,8 @@
 {
   "port": 3001,
   "artifactsDir": "./artifacts/contracts",
-  "contracts": ["Lock"],
-  "walletConnectId": "6aa783ad4de9a655f4e4537ef6b909c6",
+  "contracts": ["Lock", "HelloWorld", "DeeplyNestedContract"],
+  "walletConnectId": "f714f39c9016cf378e94363c96f11dad",
   "defaultAddresses": {
     "Lock": "0x0000000000000000000000000000000000000000"
   },
