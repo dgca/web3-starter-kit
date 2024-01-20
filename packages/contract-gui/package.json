@@ -1,7 +1,7 @@
 {
   "name": "@type_of/contract-gui",
   "license": "MIT",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "bin": {
     "start-contract-gui": "./bin/start-contract-gui.mjs"
   },
