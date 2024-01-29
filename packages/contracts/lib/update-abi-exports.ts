@@ -8,6 +8,7 @@ const contractArtifactsDir = path.join(path.resolve(), "artifacts", "src");
 const contractArtifacts = fs.readdirSync(contractArtifactsDir);
 
 let fileContent = "";
+const contractNames: string[] = [];
 
 for (const folderName of contractArtifacts) {
   const contractName = folderName.replace(/\.sol$/, "");
@@ -24,6 +25,13 @@ for (const folderName of contractArtifacts) {
     null,
     2,
   )} as const;\n\n`;
+  contractNames.push(contractName);
+}
+
+if (contractNames.length) {
+  fileContent += `export const abis = { ${contractNames.join(
+    ", ",
+  )} } as const;\n`;
 }
 
 const distPath = path.join(path.resolve(), "exports");
