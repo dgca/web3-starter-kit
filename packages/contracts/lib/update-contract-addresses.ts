@@ -22,6 +22,8 @@ export function updateContractAddresses(
 
   if (fs.existsSync(addressesFilePath)) {
     addressMap = require(addressesFilePath)[varName];
+  } else {
+    fs.mkdirSync(path.dirname(addressesFilePath), { recursive: true });
   }
 
   if (!addressMap[network]) {
