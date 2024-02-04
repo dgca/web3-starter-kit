@@ -1,25 +1,27 @@
 import fs from "fs";
 import path from "path";
 
+import { parseNestedDir } from "./parse-nested-dir";
 import { updateExportIndexFile } from "./update-export-index-file";
 
-const contractArtifactsDir = path.join(path.resolve(), "artifacts", "src");
+const contractsDir = path.join(path.resolve(), "artifacts", "src");
 
-const contractArtifacts = fs.readdirSync(contractArtifactsDir);
+const contractJsonFilePaths = parseNestedDir(contractsDir).filter((path) => {
+  const fileName = path.at(-1);
+  return !!fileName && /^\w+\.json$/.test(fileName);
+});
 
 let fileContent = "";
 const contractNames: string[] = [];
 
-for (const folderName of contractArtifacts) {
-  const contractName = folderName.replace(/\.sol$/, "");
-  const jsonPath = path.join(
-    contractArtifactsDir,
-    folderName,
-    `${contractName}.json`,
-  );
+for (const filePath of contractJsonFilePaths) {
+  const contractName = filePath.at(-1)?.replace(/\.json$/, "");
 
-  const contractJson = require(jsonPath);
+  if (!contractName) continue;
 
+  const contractJsonPath = path.join(contractsDir, ...filePath);
+  const contractJsonContent = fs.readFileSync(contractJsonPath, "utf8");
+  const contractJson = JSON.parse(contractJsonContent);
   fileContent += `export const ${contractName} = ${JSON.stringify(
     contractJson.abi,
     null,
