@@ -11,18 +11,20 @@
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",
     "@rainbow-me/rainbowkit": "^1.3.2",
+    "@type_of/use-wagmi-contracts": "^0.0.12",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "contracts": "*",
     "next": "^13.4.19",
+    "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
-    "viem": "~1.19.15",
-    "wagmi": "~1.4.12",
-    "contracts": "*",
     "ui-kit": "*",
-    "ui-utils": "*"
+    "ui-utils": "*",
+    "viem": "~1.19.15",
+    "wagmi": "~1.4.12"
   },
   "devDependencies": {
     "@types/node": "^18.18.10",

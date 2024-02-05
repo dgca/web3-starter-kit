@@ -1,3 +1,5 @@
+@import '@rainbow-me/rainbowkit/styles.css';
+@import 'ui-kit/dist/index.css';
 @import 'ui-utils/styles/global.css';
 
 html,

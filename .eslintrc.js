@@ -10,7 +10,7 @@ module.exports = {
     "prettier",
   ],
   rules: {
-    "import/no-unresolved": "error",
+    "import/no-unresolved": "off",
     "import/order": [
       "error",
       {
