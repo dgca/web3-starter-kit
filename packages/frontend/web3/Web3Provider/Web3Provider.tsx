@@ -1,30 +1,27 @@
 import "@rainbow-me/rainbowkit/styles.css";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider, getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { ReactNode } from "react";
-import { createConfig, WagmiConfig } from "wagmi";
+import { WagmiProvider } from "wagmi";
 
-import { chains, publicClient, webSocketPublicClient } from "@/web3/chains";
+import { getChainsAndTransports } from "@/web3/chains";
 import { WagmiContractsProvider } from "@/web3/WagmiContractsProvider";
 
-const { connectors } = getDefaultWallets({
-  appName: "Web3 Starter Kit",
+const { chains, transports } = getChainsAndTransports();
+
+const config = getDefaultConfig({
+  appName: "Frontend Client",
   projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ?? "",
   chains,
-});
-
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-  webSocketPublicClient,
+  transports,
+  ssr: true,
 });
 
 export function Web3Provider({ children }: { children: ReactNode }) {
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
+    <WagmiProvider config={config}>
+      <RainbowKitProvider>
         <WagmiContractsProvider>{children}</WagmiContractsProvider>
       </RainbowKitProvider>
-    </WagmiConfig>
+    </WagmiProvider>
   );
 }

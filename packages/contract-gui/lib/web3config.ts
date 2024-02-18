@@ -1,36 +1,30 @@
-import {
-  connectorsForWallets,
-  getDefaultWallets,
-} from "@rainbow-me/rainbowkit";
 import { useEffect, useState } from "react";
-import { ChainProviderFn, Config, configureChains, createConfig } from "wagmi";
+import { Config, createConfig, http } from "wagmi";
 import * as wagmiChains from "wagmi/chains";
 import { Chain } from "wagmi/chains";
-import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
-import { publicProvider } from "wagmi/providers/public";
 
 import { getLocalConfig } from "../utils/getLocalConfig";
 
 type ChainOptions = keyof typeof wagmiChains;
 export type ChainConfig = Record<ChainOptions, true | string>;
 
-function createJsonRpcProvider(url: string) {
-  return jsonRpcProvider({
-    rpc: () => ({
-      http: url,
-    }),
-  });
-}
-
-async function getConfiguredChains(chainConfig: ChainConfig) {
+async function getChainsAndTransports(chainConfig: ChainConfig) {
   const localConfig = await getLocalConfig();
   const selectedChains: ChainConfig =
     (localConfig?.chains as ChainConfig) || chainConfig;
-  const chains: Chain[] = [];
-  const providers: ChainProviderFn[] = [];
+
+  const chainsAndTransports: {
+    chains: Chain[];
+    transports: {
+      [key: string]: ReturnType<typeof http>;
+    };
+  } = {
+    chains: [],
+    transports: {},
+  };
 
   Object.entries(selectedChains).forEach(([chain, value]) => {
-    // @ts-expect-error @todo: Unable type dynamically defined chains
+    // @ts-expect-error @todo: Unable to type dynamically defined chains
     // eslint-disable-next-line import/namespace
     const wagmiChain = wagmiChains[chain];
 
@@ -42,13 +36,45 @@ Please ensure chains match the name of the exported wagmi chains.`,
       );
     }
 
-    chains.push(wagmiChain);
-    const provider =
-      value === true ? publicProvider() : createJsonRpcProvider(value);
-    providers.push(provider);
+    chainsAndTransports.chains.push(wagmiChain);
+    chainsAndTransports.transports[wagmiChain.id] = http(
+      value === true ? undefined : value,
+    );
   });
 
-  return configureChains(chains, providers);
+  return chainsAndTransports;
+}
+
+export function useChainsAndTransports(chainConfig: ChainConfig) {
+  const [error, setError] = useState<Error | null>(null);
+  const [chainsAndTransports, setChainsAndTransports] = useState<{
+    chains?: Chain[];
+    transports?: {
+      [key: string]: ReturnType<typeof http>;
+    };
+  }>({
+    chains: undefined,
+    transports: undefined,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  useEffect(() => {
+    async function handleChainsAndTransports() {
+      try {
+        const chainsAndTransports = await getChainsAndTransports(chainConfig);
+        setChainsAndTransports(chainsAndTransports);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error(String(err)));
+      }
+    }
+
+    handleChainsAndTransports();
+  }, [chainConfig]);
+
+  return chainsAndTransports;
 }
 
 export function useWeb3Config({
@@ -58,64 +84,29 @@ export function useWeb3Config({
   walletConnectId: string;
   chainConfig: ChainConfig;
 }) {
-  const [error, setError] = useState<Error | null>(null);
-  const [config, setConfig] = useState<{
-    chains?: Chain[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    wagmiConfig?: Config<any, any>;
-  }>({
-    chains: undefined,
-    wagmiConfig: undefined,
-  });
-
-  if (error) {
-    throw error;
-  }
+  const [config, setConfig] = useState<Config>();
 
   useEffect(() => {
     async function handleConfig() {
-      try {
-        const { chains, publicClient, webSocketPublicClient } =
-          await getConfiguredChains(chainConfig);
+      if (config) return;
 
-        const localConfig = await getLocalConfig();
-        const projectId = localConfig?.walletConnectId ?? walletConnectId;
+      const chainsAndTransports = await getChainsAndTransports(chainConfig);
 
-        const { wallets } = getDefaultWallets({
-          appName: "Contracts GUI",
-          projectId,
-          chains,
-        });
-
-        const connectors = connectorsForWallets([
-          {
-            groupName: "Popular",
-            wallets: projectId
-              ? wallets[0].wallets
-              : wallets[0].wallets.filter(
-                  ({ id }) => id !== "walletConnect" && id !== "rainbow",
-                ),
-          },
-        ]);
-
-        const wagmiConfig = createConfig({
-          autoConnect: true,
-          connectors,
-          publicClient,
-          webSocketPublicClient,
-        });
-
-        setConfig({
-          chains,
-          wagmiConfig,
-        });
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error(String(err)));
+      if (chainsAndTransports.chains && chainsAndTransports.transports) {
+        setConfig(
+          createConfig({
+            appName: "Frontend Client",
+            projectId: walletConnectId,
+            // @ts-expect-error Unable to type dynamically defined chains
+            chains: chainsAndTransports.chains,
+            transports: chainsAndTransports.transports,
+            ssr: true,
+          }),
+        );
       }
     }
-
     handleConfig();
-  }, [chainConfig, walletConnectId]);
+  }, [chainConfig, walletConnectId, config]);
 
   return config;
 }
