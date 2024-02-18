@@ -24,7 +24,7 @@ async function getChainsAndTransports(chainConfig: ChainConfig) {
   };
 
   Object.entries(selectedChains).forEach(([chain, value]) => {
-    // @ts-expect-error @todo: Unable type dynamically defined chains
+    // @ts-expect-error @todo: Unable to type dynamically defined chains
     // eslint-disable-next-line import/namespace
     const wagmiChain = wagmiChains[chain];
 
