@@ -1,0 +1,23 @@
+{
+  "name": "@type_of/use-wagmi-contracts",
+  "version": "1.0.0-beta.0",
+  "description": "Convert Solidity ABIs into a ready-to-consume React + wagmi utility functions",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsup ./src/index.ts --dts --format esm",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "typescript": ">=5.0.0",
+    "viem": ">=2.0.0",
+    "wagmi": ">=2.0.0"
+  },
+  "author": "Daniel Cortes",
+  "license": "ISC",
+  "devDependencies": {
+    "type-fest": "^4.10.2"
+  }
+}

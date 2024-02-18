@@ -10,6 +10,10 @@ const { WagmiContractsProvider, useContracts } = initUseWagmiContracts({
     abi: abis.TodoList,
     defaultAddress: contractAddresses.TodoList,
   },
+  TestSolidityTypes: {
+    abi: abis.TestSolidityTypes,
+    defaultAddress: contractAddresses.TestSolidityTypes,
+  },
 });
 
 export { WagmiContractsProvider, useContracts };

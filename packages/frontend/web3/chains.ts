@@ -1,42 +1,57 @@
-import { configureChains } from "wagmi";
+import { createPublicClient } from "viem";
+import { http } from "wagmi";
 import { baseSepolia, base, hardhat } from "wagmi/chains";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
 
 import { getEnv } from "@/utils/getEnv";
 
-const ALCHEMY_API_KEY = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY ?? "";
+const ALCHEMY_HTTP_URL = process.env.NEXT_PUBLIC_ALCHEMY_HTTP_URL ?? "";
 
-function getConfiguredChains() {
+export function getChainsAndTransports(): {
+  chains:
+    | readonly [typeof baseSepolia]
+    | readonly [typeof base]
+    | readonly [typeof hardhat];
+  transports: {
+    [key: string]: ReturnType<typeof http>;
+  };
+} {
   const env = getEnv();
 
   if (env === "development") {
-    return configureChains([hardhat], [publicProvider()]);
+    return {
+      chains: [hardhat],
+      transports: {
+        [hardhat.id]: http(),
+      },
+    } as const;
   }
 
-  return configureChains(
-    [env === "testnet" ? baseSepolia : base],
-    [
-      alchemyProvider({
-        apiKey: ALCHEMY_API_KEY,
-      }),
-    ],
-  );
+  if (env === "testnet") {
+    return {
+      chains: [baseSepolia],
+      transports: {
+        [baseSepolia.id]: http(ALCHEMY_HTTP_URL),
+      },
+    } as const;
+  }
+
+  return {
+    chains: [base],
+    transports: {
+      [base.id]: http(ALCHEMY_HTTP_URL),
+    },
+  } as const;
 }
 
-export const { chains, publicClient, webSocketPublicClient } =
-  getConfiguredChains();
-
 export function getPublicClient() {
-  const env = getEnv();
+  const { chains, transports } = getChainsAndTransports();
 
-  const chainId = {
-    development: hardhat.id,
-    testnet: baseSepolia.id,
-    mainnet: base.id,
-  }[env];
+  const chain = chains.at(0);
 
-  return publicClient({
-    chainId: chainId,
+  if (!chain) throw new Error("Chain not found");
+
+  return createPublicClient({
+    chain: chain,
+    transport: transports[chain.id],
   });
 }

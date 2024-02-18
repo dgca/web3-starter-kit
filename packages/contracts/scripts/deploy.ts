@@ -18,8 +18,17 @@ async function deployTestSolidityTypes() {
 }
 
 async function main() {
+  const [deployerClient] = await hre.viem.getWalletClients();
+
   const todoList = await deployTodoList();
   const testSolidityTypes = await deployTestSolidityTypes();
+
+  await deployerClient.writeContract({
+    abi: todoList.abi,
+    address: todoList.address,
+    functionName: "add",
+    args: ["Build the next big thing"],
+  });
 
   if (hre.network.name === "localhost") {
     updateContractAddresses("localhost", {

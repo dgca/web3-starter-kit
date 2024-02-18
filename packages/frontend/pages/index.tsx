@@ -1,11 +1,46 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useWriteContract } from "wagmi";
 
 import { Text } from "ui-kit";
 
 import { MainLayout } from "@/components/Layouts/MainLayout";
+import { useContracts } from "@/web3/WagmiContractsProvider";
+
+type Todo = {
+  text: string;
+  completed: boolean;
+};
+
+function useTestContractReads(): [ReadonlyArray<Todo> | null, bigint | null] {
+  const contracts = useContracts();
+  try {
+    const { data: todos } = contracts.TodoList().getAll.useRead();
+    const { data: uint } = contracts.TestSolidityTypes().getUint.useRead();
+    return [todos ?? null, uint ?? null];
+  } catch (_err) {
+    return [null, null];
+  }
+}
+
+function useTestContractWrites() {
+  const contracts = useContracts();
+  const todoList = contracts.TodoList();
+  const { writeContract } = useWriteContract();
+
+  const { data } = todoList.add.useSimulateContract({
+    args: ["hello"],
+  });
+
+  return () => {
+    if (!data) return;
+    writeContract(data.request);
+  };
+}
 
 const Home: NextPage = () => {
+  const [todos, uint] = useTestContractReads();
+  const _handleAdd = useTestContractWrites();
   return (
     <>
       <Head>
@@ -33,6 +68,16 @@ const Home: NextPage = () => {
             <li>Tailwind</li>
             <li>shadcn/ui</li>
           </ul>
+
+          <Text.P>
+            If you&apos;re running Hardhat locally, you should see some data
+            below:
+          </Text.P>
+
+          <Text.P>
+            todo: {todos?.at(0) ? JSON.stringify(todos.at(0)) : "—"}
+          </Text.P>
+          <Text.P>uint: {uint ? Number(uint) : "—"}</Text.P>
 
           <Text.P>Edit this content to get started!</Text.P>
         </div>
