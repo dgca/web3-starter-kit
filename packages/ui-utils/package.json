@@ -6,7 +6,11 @@
     "./styles/global.css",
     "./tailwind/tailwind.config.js"
   ],
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "5.4.2",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.2.0"
+  },
   "scripts": {
     "build": "tsc index.ts --outDir dist"
   }

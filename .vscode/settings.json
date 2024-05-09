@@ -1,6 +1,0 @@
-{
-  "solidity.formatter": "prettier",
-  "[solidity]": {
-    "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
-  }
-}

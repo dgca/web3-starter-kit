@@ -18,6 +18,9 @@
   "author": "Daniel Cortes",
   "license": "ISC",
   "devDependencies": {
+    "@types/react": "^18.3.0",
+    "abitype": "^1.0.0",
+    "react": "^18.3.0",
     "type-fest": "^4.10.2"
   }
 }

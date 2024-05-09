@@ -5,7 +5,6 @@
   "files": [
     "./dist/index.css"
   ],
-  "devDependencies": {},
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup"
@@ -15,11 +14,20 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-radio-group": "^1.1.3",
     "@radix-ui/react-slot": "^1.0.2",
-    "@radix-ui/react-switch": "^1.0.3"
+    "@radix-ui/react-switch": "^1.0.3",
+    "ui-utils": "workspace:*",
+    "class-variance-authority": "^0.7.0"
+  },
+  "devDependencies": {
+    "react": "^18.3.0",
+    "@types/react": "^18.3.0",
+    "tsup": "^8.0.1",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
     "clsx": "^2.1.0",
     "tailwind-merge": "^2.2.0"
   }

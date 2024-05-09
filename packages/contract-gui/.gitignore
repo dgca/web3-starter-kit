@@ -1,8 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Configuration for testing and running the app locally
-/local-config/index.ts
-
 # dependencies
 /node_modules
 /.pnp
